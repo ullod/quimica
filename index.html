@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Equilíbrio Químico - Resumo Interativo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(45deg, #2c3e50, #34495e);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        nav {
+            background: #34495e;
+            padding: 1rem;
+        }
+        
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        
+        nav a:hover {
+            background: #2c3e50;
+        }
+        
+        main {
+            padding: 2rem;
+        }
+        
+        .section {
+            margin-bottom: 3rem;
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 10px;
+            border-left: 5px solid #3498db;
+        }
+        
+        h2 {
+            color: #2c3e50;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #3498db;
+        }
+        
+        h3 {
+            color: #34495e;
+            margin: 1.5rem 0 1rem;
+            font-size: 1.3rem;
+        }
+        
+        h4 {
+            color: #2c3e50;
+            margin: 1rem 0 0.5rem;
+            font-size: 1.1rem;
+        }
+        
+        .formula {
+            background: #e8f4f8;
+            padding: 0.8rem;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 1.1rem;
+            text-align: center;
+            margin: 1rem 0;
+            border: 1px solid #3498db;
+        }
+        
+        .highlight {
+            background: #fff3cd;
+            padding: 1rem;
+            border-radius: 5px;
+            border-left: 4px solid #ffc107;
+            margin: 1rem 0;
+        }
+        
+        .tip {
+            background: #d1ecf1;
+            padding: 1rem;
+            border-radius: 5px;
+            border-left: 4px solid #17a2b8;
+            margin: 1rem 0;
+        }
+        
+        .pegadinha {
+            background: #f8d7da;
+            padding: 1rem;
+            border-radius: 5px;
+            border-left: 4px solid #dc3545;
+            margin: 1rem 0;
+        }
+        
+        .question-container {
+            background: white;
+            padding: 2rem;
+            margin: 2rem 0;
+            border-radius: 10px;
+            border: 1px solid #dee2e6;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .question-number {
+            background: #3498db;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            display: inline-block;
+            margin-bottom: 1rem;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        
+        .question-text {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+        }
+        
+        .options {
+            margin-bottom: 1.5rem;
+        }
+        
+        .option {
+            display: block;
+            background: #f8f9fa;
+            padding: 1rem;
+            margin: 0.5rem 0;
+            border-radius: 8px;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .option:hover {
+            background: #e9ecef;
+            border-color: #3498db;
+        }
+        
+        .option input[type="radio"] {
+            margin-right: 1rem;
+            transform: scale(1.2);
+        }
+        
+        .option.selected {
+            background: #e3f2fd;
+            border-color: #2196f3;
+        }
+        
+        .option.correct {
+            background: #d4edda;
+            border-color: #28a745;
+            color: #155724;
+        }
+        
+        .option.incorrect {
+            background: #f8d7da;
+            border-color: #dc3545;
+            color: #721c24;
+        }
+        
+        .confirm-btn {
+            background: #28a745;
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-right: 1rem;
+        }
+        
+        .confirm-btn:hover {
+            background: #218838;
+        }
+        
+        .confirm-btn:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+        }
+        
+        .reset-btn {
+            background: #6c757d;
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .reset-btn:hover {
+            background: #5a6268;
+        }
+        
+        .feedback {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 8px;
+            font-weight: 500;
+            display: none;
+        }
+        
+        .feedback.correct {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+        
+        .feedback.incorrect {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+        
+        ul, ol {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        li {
+            margin-bottom: 0.5rem;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            background: white;
+        }
+        
+        th, td {
+            border: 1px solid #dee2e6;
+            padding: 0.8rem;
+            text-align: center;
+        }
+        
+        th {
+            background: #f8f9fa;
+            font-weight: bold;
+        }
+        
+        footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        .arrow {
+            font-size: 1.2rem;
+            color: #3498db;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Equilíbrio Químico</h1>
+            <p class="subtitle">Resumo Completo com Questões Interativas</p>
+        </header>
+        
+        <nav>
+            <ul>
+                <li><a href="#resumo">Resumo Teórico</a></li>
+                <li><a href="#pegadinhas">Pegadinhas</a></li>
+                <li><a href="#questoes">Questões Interativas</a></li>
+            </ul>
+        </nav>
+        
+        <main>
+            <section id="resumo" class="section">
+                <h2>Resumo Completo sobre Equilíbrio Químico</h2>
+                
+                <p>O equilíbrio químico é um conceito fundamental que descreve o estado em que as reações químicas reversíveis atingem uma estabilidade.</p>
+                
+                <h3>1. Reações Reversíveis e o Estado de Equilíbrio</h3>
+                <p>Nem todas as reações ocorrem em um único sentido. Muitas são <strong>reversíveis</strong>, o que significa que os produtos podem reagir entre si e formar novamente os reagentes. Representamos uma reação reversível com uma seta dupla (⇌).</p>
+                
+                <ul>
+                    <li><strong>Reação Direta:</strong> Reagentes <span class="arrow">⟶</span> Produtos</li>
+                    <li><strong>Reação Inversa:</strong> Produtos <span class="arrow">⟶</span> Reagentes</li>
+                </ul>
+                
+                <div class="highlight">
+                    <strong>O equilíbrio químico é atingido quando a velocidade da reação direta se torna igual à velocidade da reação inversa.</strong>
+                </div>
+                
+                <p>Imagine uma escada rolante que sobe e outra que desce, ambas na mesma velocidade. O número de pessoas em cada andar (reagentes e produtos) permanece constante, embora haja um fluxo contínuo de pessoas subindo e descendo.</p>
+                
+                <h3>2. A Constante de Equilíbrio em Termos de Concentração (Kc)</h3>
+                <p>A relação entre as concentrações de produtos e reagentes no estado de equilíbrio é dada por uma constante chamada <strong>Constante de Equilíbrio (Kc)</strong>. Sua expressão é baseada na Lei da Ação das Massas.</p>
+                
+                <p>Para uma reação genérica:</p>
+                <div class="formula">aA + bB ⇌ cC + dD</div>
+                
+                <p>A fórmula da constante de equilíbrio (Kc) é:</p>
+                <div class="formula">
+                    K<sub>c</sub> = [C]<sup>c</sup> × [D]<sup>d</sup> / [A]<sup>a</sup> × [B]<sup>b</sup>
+                </div>
+                
+                <p>Onde:</p>
+                <ul>
+                    <li><strong>[ ]</strong> indica a concentração molar (mol/L) da espécie no equilíbrio</li>
+                    <li><strong>a, b, c, d</strong> são os coeficientes estequiométricos da reação balanceada</li>
+                </ul>
+                
+                <div class="tip">
+                    <h4>Regras Importantes:</h4>
+                    <ul>
+                        <li><strong>Sólidos e Líquidos Puros:</strong> Substâncias no estado sólido (s) ou como líquidos puros (l) não entram na expressão do Kc</li>
+                        <li>Apenas espécies no estado gasoso (g) ou em solução aquosa (aq) participam</li>
+                    </ul>
+                </div>
+                
+                <h4>Interpretação do Kc:</h4>
+                <ul>
+                    <li><strong>Kc > 1:</strong> O equilíbrio favorece a formação dos produtos</li>
+                    <li><strong>Kc < 1:</strong> O equilíbrio favorece os reagentes</li>
+                    <li><strong>Kc ≈ 1:</strong> Concentrações similares de reagentes e produtos</li>
+                </ul>
+                
+                <h4>Exemplo Prático: Montando a Fórmula do Kc</h4>
+                <p>Para a reação de síntese da amônia:</p>
+                <div class="formula">N₂(g) + 3H₂(g) ⇌ 2NH₃(g)</div>
+                <p>A expressão do Kc será:</p>
+                <div class="formula">K<sub>c</sub> = [NH₃]² / ([N₂] × [H₂]³)</div>
+                
+                <h3>3. Quociente de Reação (Q)</h3>
+                <p>O quociente de reação (Q) tem a mesma forma matemática de Kc, mas é calculado com concentrações em qualquer momento (não necessariamente no equilíbrio):</p>
+                
+                <ul>
+                    <li><strong>Q < K:</strong> nesse ponto, a reação apresenta menores quantidades de produtos e maiores quantidades de reagentes que a estabelecida em equilíbrio. A reação desloca para a direita.</li>
+                    <li><strong>Q > K:</strong> nesse ponto, a reação apresenta maiores quantidades de produtos e menores quantidades de reagentes que a estabelecida em equilíbrio. A reação desloca para a esquerda.</li>
+                    <li><strong>Q = K:</strong> Reação em equilíbrio - sem deslocamento</li>
+                </ul>
+                
+                <h3>4. Deslocamento do Equilíbrio (Princípio de Le Chatelier)</h3>
+                <p>O Princípio de Le Chatelier diz que, se um sistema em equilíbrio for perturbado, ele se ajustará (deslocará) para anular essa perturbação e restabelecer um novo estado de equilíbrio.</p>
+                
+                <h4>4.1. Concentração:</h4>
+                <ul>
+                    <li><strong>Adição de uma substância:</strong> O equilíbrio se desloca para o lado oposto, para consumir o que foi adicionado</li>
+                    <li><strong>Remoção de uma substância:</strong> O equilíbrio se desloca para o mesmo lado, para repor o que foi retirado</li>
+                </ul>
+                
+                <h4>4.2. Pressão (apenas para gases):</h4>
+                <ul>
+                    <li><strong>Aumento da Pressão:</strong> O equilíbrio se desloca para o lado com menor volume molar (menor número de mols de gás)</li>
+                    <li><strong>Diminuição da Pressão:</strong> O equilíbrio se desloca para o lado com maior volume molar (maior número de mols de gás)</li>
+                </ul>
+                
+                <h4>4.3. Temperatura (o único fator que altera o valor de Kc):</h4>
+                <ul>
+                    <li><strong>Aumento da Temperatura:</strong> O equilíbrio se desloca no sentido da reação endotérmica (que absorve calor, ΔH>0)</li>
+                    <li><strong>Diminuição da Temperatura:</strong> O equilíbrio se desloca no sentido da reação exotérmica (que libera calor, ΔH<0)</li>
+                </ul>
+                
+                <h4>4.4. Catalisador:</h4>
+                <p>O catalisador <strong>NÃO desloca o equilíbrio</strong>. Ele apenas aumenta a velocidade das reações direta e inversa na mesma proporção, fazendo com que o equilíbrio seja atingido mais rapidamente. O valor de Kc não se altera.</p>
+            </section>
+            
+            <section id="pegadinhas" class="section">
+                <h2>Pegadinhas Importantes</h2>
+                
+                <div class="pegadinha">
+                    <h4>Pegadinha 1: Equilíbrio Dinâmico</h4>
+                    <p>No equilíbrio, as reações <strong>não param</strong>! Elas continuam ocorrendo em velocidades iguais. É um equilíbrio dinâmico, não estático. As concentrações de reagentes e produtos permanecem constantes, mas não necessariamente iguais.</p>
+                </div>
+                
+                <div class="pegadinha">
+                    <h4>Pegadinha 2: Sólidos e Líquidos</h4>
+                    <p>Substâncias no estado sólido (s) ou como líquidos puros (l) <strong>não entram na expressão do Kc</strong>. Suas concentrações são consideradas constantes e já estão incluídas no valor do Kc.</p>
+                </div>
+                
+                <div class="pegadinha">
+                    <h4>Pegadinha 3: Pressão e Número de Mols</h4>
+                    <p>Se o número de mols de gás for igual nos dois lados da equação, a pressão <strong>não desloca o equilíbrio</strong>.</p>
+                </div>
+                
+                <div class="pegadinha">
+                    <h4>Pegadinha 4: Temperatura e Kc</h4>
+                    <p>Aumentar a temperatura em uma reação exotérmica <strong>diminui</strong> o valor de Kc. Aumentar a temperatura em uma reação endotérmica <strong>aumenta</strong> o valor de Kc.</p>
+                </div>
+                
+                <div class="pegadinha">
+                    <h4>Pegadinha 5: Catalisador</h4>
+                    <p>O catalisador <strong>NÃO desloca o equilíbrio</strong> e <strong>NÃO altera o valor de Kc</strong>. Apenas acelera o tempo para atingir o equilíbrio.</p>
+                </div>
+            </section>
+            
+            <section id="questoes" class="section">
+                <h2>Questões Interativas</h2>
+                
+                <div class="question-container">
+                    <div class="question-number">Questão 1</div>
+                    <div class="question-text">Um sistema reacional atinge o equilíbrio químico quando:</div>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q1" value="a">
+                            a) As concentrações de reagentes e produtos se tornam iguais.
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q1" value="b">
+                            b) A reação para completamente.
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q1" value="c">
+                            c) A velocidade da reação direta é igual à velocidade da reação inversa.
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q1" value="d">
+                            d) A temperatura do sistema se torna constante.
+                        </label>
+                    </div>
+                    <button class="confirm-btn" onclick="checkAnswer('q1', 'c')">Confirmar</button>
+                    <button class="reset-btn" onclick="resetQuestion('q1')">Limpar</button>
+                    <div class="feedback" id="feedback-q1"></div>
+                </div>
+                
+                <div class="question-container">
+                    <div class="question-number">Questão 2</div>
+                    <div class="question-text">Considere a reação: CaCO₃(s) ⇌ CaO(s) + CO₂(g). Qual é a expressão correta para a constante de equilíbrio (Kc)?</div>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q2" value="a">
+                            a) K<sub>c</sub> = [CaO] × [CO₂] / [CaCO₃]
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q2" value="b">
+                            b) K<sub>c</sub> = [CO₂]
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q2" value="c">
+                            c) K<sub>c</sub> = 1 / [CO₂]
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q2" value="d">
+                            d) K<sub>c</sub> = [CaCO₃] / ([CaO] × [CO₂])
+                        </label>
+                    </div>
+                    <button class="confirm-btn" onclick="checkAnswer('q2', 'b')">Confirmar</button>
+                    <button class="reset-btn" onclick="resetQuestion('q2')">Limpar</button>
+                    <div class="feedback" id="feedback-q2"></div>
+                </div>
+                
+                <div class="question-container">
+                    <div class="question-number">Questão 3</div>
+                    <div class="question-text">Em uma reação cujo valor de Kc é muito menor que 1 (Kc << 1), podemos afirmar que, no equilíbrio:</div>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q3" value="a">
+                            a) A concentração de produtos é muito maior que a de reagentes.
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q3" value="b">
+                            b) A reação é muito rápida.
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q3" value="c">
+                            c) O equilíbrio favorece a permanência dos reagentes.
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q3" value="d">
+                            d) O equilíbrio foi atingido com o consumo total dos reagentes.
+                        </label>
+                    </div>
+                    <button class="confirm-btn" onclick="checkAnswer('q3', 'c')">Confirmar</button>
+                    <button class="reset-btn" onclick="resetQuestion('q3')">Limpar</button>
+                    <div class="feedback" id="feedback-q3"></div>
+                </div>
+                
+                <div class="question-container">
+                    <div class="question-number">Questão 4</div>
+                    <div class="question-text">Considere a seguinte reação exotérmica em equilíbrio: 2SO₂(g) + O₂(g) ⇌ 2SO₃(g). Qual das seguintes ações deslocará o equilíbrio para a direita (sentido dos produtos)?</div>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q4" value="a">
+                            a) Aumentar a temperatura.
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q4" value="b">
+                            b) Adicionar um catalisador.
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q4" value="c">
+                            c) Diminuir a pressão total do sistema.
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q4" value="d">
+                            d) Aumentar a concentração de O₂(g).
+                        </label>
+                    </div>
+                    <button class="confirm-btn" onclick="checkAnswer('q4', 'd')">Confirmar</button>
+                    <button class="reset-btn" onclick="resetQuestion('q4')">Limpar</button>
+                    <div class="feedback" id="feedback-q4"></div>
+                </div>
+                
+                <div class="question-container">
+                    <div class="question-number">Questão 5</div>
+                    <div class="question-text">Para a reação 2NO(g) + O₂(g) ⇌ 2NO₂(g), qual é a expressão correta da constante de equilíbrio Kc?</div>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q5" value="a">
+                            a) K<sub>c</sub> = [NO₂]² / ([NO]² × [O₂])
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q5" value="b">
+                            b) K<sub>c</sub> = [NO]² × [O₂] / [NO₂]²
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q5" value="c">
+                            c) K<sub>c</sub> = [NO₂] / ([NO] × [O₂])
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q5" value="d">
+                            d) K<sub>c</sub> = [NO] × [O₂] / [NO₂]
+                        </label>
+                    </div>
+                    <button class="confirm-btn" onclick="checkAnswer('q5', 'a')">Confirmar</button>
+                    <button class="reset-btn" onclick="resetQuestion('q5')">Limpar</button>
+                    <div class="feedback" id="feedback-q5"></div>
+                </div>
+            </section>
+        </main>
+        
+        <footer>
+            <p>&copy; 2024 - Material Interativo de Química - Equilíbrio Químico</p>
+        </footer>
+    </div>
+
+    <script>
+        // Gabaritos e explicações
+        const gabaritos = {
+            'q1': {
+                'correct': 'c',
+                'explanation': 'A definição de equilíbrio químico é o ponto onde as velocidades das reações direta e inversa se igualam, mantendo as concentrações constantes (mas não necessariamente iguais).'
+            },
+            'q2': {
+                'correct': 'b',
+                'explanation': 'Conforme a regra, substâncias sólidas (CaCO₃ e CaO) não entram na expressão do Kc. Portanto, apenas o CO₂ gasoso permanece: Kc = [CO₂].'
+            },
+            'q3': {
+                'correct': 'c',
+                'explanation': 'Um Kc < 1 indica que o denominador (reagentes) da expressão é maior que o numerador (produtos), favorecendo os reagentes.'
+            },
+            'q4': {
+                'correct': 'd',
+                'explanation': 'A adição de um reagente (O₂) desloca o equilíbrio para o lado oposto (produtos) para consumi-lo. Aumentar temperatura deslocaria para a esquerda (sentido endotérmico), diminuir pressão deslocaria para a esquerda (lado com mais mols), e catalisador não desloca equilíbrio.'
+            },
+            'q5': {
+                'correct': 'a',
+                'explanation': 'Para 2NO(g) + O₂(g) ⇌ 2NO₂(g), a expressão é: Kc = [produtos]^coeficientes / [reagentes]^coeficientes = [NO₂]² / ([NO]² × [O₂]).'
+            }
+        };
+
+        function checkAnswer(questionName, correctAnswer) {
+            const selectedOption = document.querySelector(`input[name="${questionName}"]:checked`);
+            const feedback = document.getElementById(`feedback-${questionName}`);
+            const options = document.querySelectorAll(`input[name="${questionName}"]`);
+            
+            if (!selectedOption) {
+                alert('Por favor, selecione uma alternativa antes de confirmar.');
+                return;
+            }
+            
+            // Desabilitar todas as opções
+            options.forEach(option => {
+                option.disabled = true;
+                const label = option.parentElement;
+                label.style.cursor = 'not-allowed';
+                label.style.opacity = '0.7';
+            });
+            
+            // Desabilitar botão confirmar
+            const confirmBtn = document.querySelector(`button[onclick="checkAnswer('${questionName}', '${correctAnswer}')"]`);
+            confirmBtn.disabled = true;
+            
+            const selectedValue = selectedOption.value;
+            const isCorrect = selectedValue === correctAnswer;
+            
+            // Destacar resposta correta
+            options.forEach(option => {
+                const label = option.parentElement;
+                if (option.value === correctAnswer) {
+                    label.classList.add('correct');
+                }
+                if (option.checked && option.value !== correctAnswer) {
+                    label.classList.add('incorrect');
+                }
+            });
+            
+            // Mostrar feedback
+            feedback.style.display = 'block';
+            if (isCorrect) {
+                feedback.className = 'feedback correct';
+                feedback.innerHTML = `
+                    <strong>✅ Correto!</strong><br>
+                    ${gabaritos[questionName].explanation}
+                `;
+            } else {
+                feedback.className = 'feedback incorrect';
+                feedback.innerHTML = `
+                    <strong>❌ Incorreto!</strong><br>
+                    A resposta correta é a alternativa <strong>${correctAnswer.toUpperCase()}</strong>.<br>
+                    <strong>Explicação:</strong> ${gabaritos[questionName].explanation}
+                `;
+            }
+        }
+
+        function resetQuestion(questionName) {
+            const options = document.querySelectorAll(`input[name="${questionName}"]`);
+            const feedback = document.getElementById(`feedback-${questionName}`);
+            const confirmBtn = document.querySelector(`button[onclick*="${questionName}"]`);
+            
+            // Resetar opções
+            options.forEach(option => {
+                option.checked = false;
+                option.disabled = false;
+                const label = option.parentElement;
+                label.classList.remove('correct', 'incorrect', 'selected');
+                label.style.cursor = 'pointer';
+                label.style.opacity = '1';
+            });
+            
+            // Reabilitar botão confirmar
+            confirmBtn.disabled = false;
+            
+            // Esconder feedback
+            feedback.style.display = 'none';
+        }
+
+        // Adicionar interatividade às opções
+        document.addEventListener('DOMContentLoaded', function() {
+            const options = document.querySelectorAll('.option');
+            options.forEach(option => {
+                option.addEventListener('click', function() {
+                    const radio = this.querySelector('input[type="radio"]');
+                    const questionName = radio.name;
+                    
+                    // Remover seleção anterior
+                    document.querySelectorAll(`input[name="${questionName}"]`).forEach(r => {
+                        r.parentElement.classList.remove('selected');
+                    });
+                    
+                    // Adicionar seleção atual
+                    radio.checked = true;
+                    this.classList.add('selected');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
