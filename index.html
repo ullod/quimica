@@ -28,6 +28,15 @@
             overflow: hidden;
         }
         
+        /* Melhorias para dispositivos móveis */
+        @media (max-width: 768px) {
+            .container {
+                margin: 0;
+                border-radius: 0;
+                box-shadow: none;
+            }
+        }
+        
         header {
             background: linear-gradient(45deg, #2c3e50, #34495e);
             color: white;
@@ -73,6 +82,39 @@
         
         main {
             padding: 2rem;
+        }
+        
+        /* Ajustes específicos para mobile */
+        @media (max-width: 768px) {
+            header {
+                padding: 1.5rem 1rem;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            main {
+                padding: 1rem;
+            }
+            
+            .section {
+                padding: 1.5rem;
+                margin-bottom: 2rem;
+            }
+            
+            nav {
+                padding: 0.5rem;
+            }
+            
+            nav ul {
+                gap: 1rem;
+            }
+            
+            nav a {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.9rem;
+            }
         }
         
         .section {
@@ -145,6 +187,36 @@
             border-radius: 10px;
             border: 1px solid #dee2e6;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        /* Ajustes para questões em mobile */
+        @media (max-width: 768px) {
+            .question-container {
+                padding: 1.5rem;
+                margin: 1.5rem 0;
+            }
+            
+            .question-text {
+                font-size: 1rem;
+                line-height: 1.5;
+            }
+            
+            .option {
+                padding: 0.8rem;
+                font-size: 0.95rem;
+            }
+            
+            .confirm-btn, .reset-btn {
+                padding: 0.8rem 1.5rem;
+                font-size: 1rem;
+                margin-bottom: 0.5rem;
+                width: auto;
+            }
+            
+            .feedback {
+                font-size: 0.9rem;
+                line-height: 1.4;
+            }
         }
         
         .question-number {
@@ -266,6 +338,33 @@
         ul, ol {
             margin-left: 2rem;
             margin-bottom: 1rem;
+        }
+        
+        /* Ajustes para listas em mobile */
+        @media (max-width: 768px) {
+            ul, ol {
+                margin-left: 1.5rem;
+                margin-right: 0.5rem;
+            }
+            
+            .formula {
+                font-size: 1rem;
+                padding: 0.6rem;
+                word-break: break-all;
+                overflow-wrap: break-word;
+            }
+            
+            h2 {
+                font-size: 1.5rem;
+            }
+            
+            h3 {
+                font-size: 1.2rem;
+            }
+            
+            h4 {
+                font-size: 1rem;
+            }
         }
         
         li {
